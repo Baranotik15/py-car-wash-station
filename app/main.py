@@ -11,12 +11,18 @@ class CarWashStation:
     def __init__(self, distance_from_city_center: float, clean_power: int,
                  average_rating: float, count_of_ratings: int) -> None :
 
+        if not (1 <= distance_from_city_center <= 10):
+            raise ValueError("Distance from city center "
+                             "must be between 1 and 10.")
+        if not (1 <= average_rating <= 5):
+            raise ValueError("Average rating must be between 1 and 5.")
+
         self.distance_from_city_center = distance_from_city_center
         self.clean_power = clean_power
         self.average_rating = average_rating
         self.count_of_ratings = count_of_ratings
 
-    def serve_cars(self, list_of_cars: list) -> float:
+    def serve_cars(self, list_of_cars: list[Car]) -> float:
         """Обслуживает список машин и возвращает общую стоимость мойки."""
         total_income = 0
         if isinstance(list_of_cars, Car):
