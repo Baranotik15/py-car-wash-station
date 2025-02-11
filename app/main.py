@@ -23,23 +23,24 @@ class CarWashStation:
         self.count_of_ratings = count_of_ratings
 
     def serve_cars(self, list_of_cars: list[Car]) -> float:
-        """Обслуживает список машин и возвращает общую стоимость мойки."""
+        """Maintains a list of cars and returns the
+        total cost of the car wash."""
         total_income = 0
         if isinstance(list_of_cars, Car):
             return self.wash_single_car(list_of_cars)
         for car in list_of_cars:
             total_income += self.wash_single_car(car)
-        return total_income
+        return round(total_income, 1)
 
     def calculate_washing_price(self, car: Car) -> float:
-        """Рассчитывает стоимость мойки для конкретной машины."""
+        """Calculates the cost of washing for a specific car."""
         result = (car.comfort_class * (self.clean_power - car.clean_mark)
                   * self.average_rating / self.distance_from_city_center)
         return round(result, 1)
 
     def wash_single_car(self, car: Car) -> float:
-        """Моет одну машину, если мощность станции больше
-         текущей чистоты машины."""
+        """Washes one car if the power of the station is greater
+         than the current cleanliness of the car."""
         if self.clean_power > car.clean_mark:
             result = self.calculate_washing_price(car)
             car.clean_mark = self.clean_power
@@ -47,7 +48,7 @@ class CarWashStation:
         return 0.0
 
     def rate_service(self, rating: float) -> None:
-        """Обновляет средний рейтинг станции после новой оценки."""
+        """Updates the station's average rating after a new rating."""
         self.average_rating = round((self.average_rating
                                     * self.count_of_ratings + rating)
                                     / (self.count_of_ratings + 1), 1)
