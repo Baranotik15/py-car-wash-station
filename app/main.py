@@ -1,15 +1,23 @@
 class Car:
-    def __init__(self, comfort_class: int,
-                 clean_mark: int, brand: str) -> None:
-
+    def __init__(
+            self,
+            comfort_class: int,
+            clean_mark: int,
+            brand: str
+    ) -> None:
         self.brand = brand
         self.comfort_class = comfort_class
         self.clean_mark = clean_mark
 
 
 class CarWashStation:
-    def __init__(self, distance_from_city_center: float, clean_power: int,
-                 average_rating: float, count_of_ratings: int) -> None :
+    def __init__(
+            self,
+            distance_from_city_center: float,
+            clean_power: int,
+            average_rating: float,
+            count_of_ratings: int
+    ) -> None:
 
         if not (1 <= distance_from_city_center <= 10):
             raise ValueError("Distance from city center "
@@ -25,12 +33,9 @@ class CarWashStation:
     def serve_cars(self, list_of_cars: list[Car]) -> float:
         """Maintains a list of cars and returns the
         total cost of the car wash."""
-        total_income = 0
         if isinstance(list_of_cars, Car):
             return self.wash_single_car(list_of_cars)
-        for car in list_of_cars:
-            total_income += self.wash_single_car(car)
-        return round(total_income, 1)
+        return round(sum(self.wash_single_car(car) for car in list_of_cars), 1)
 
     def calculate_washing_price(self, car: Car) -> float:
         """Calculates the cost of washing for a specific car."""
@@ -50,6 +55,6 @@ class CarWashStation:
     def rate_service(self, rating: float) -> None:
         """Updates the station's average rating after a new rating."""
         self.average_rating = round((self.average_rating
-                                    * self.count_of_ratings + rating)
+                                     * self.count_of_ratings + rating)
                                     / (self.count_of_ratings + 1), 1)
         self.count_of_ratings += 1
